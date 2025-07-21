@@ -1,0 +1,23 @@
+[project]
+name = "vannish-cards"
+version = "0.1.0"
+description = "Vannish cards bot"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "aiogram>=3.21.0",
+    "aiosqlite>=0.21.0",
+    "dataclasses-json>=0.6.7",
+    "loguru>=0.7.3",
+    "pillow>=11.3.0",
+    "sqlmodel>=0.0.24",
+    "toml>=0.10.2",
+]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.12.4",
+]
+
+[tool.ruff.lint]
+extend-select = ["I"]

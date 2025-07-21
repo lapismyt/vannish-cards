@@ -1,0 +1,16 @@
+config.toml
+output/*.png
+output/*.zip
+output/test/
+db.sqlite3
+
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv

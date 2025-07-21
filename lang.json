@@ -1,0 +1,28 @@
+{
+    "backgrounds": {
+        "squares": "Квадраты",
+        "circles": "Круги",
+        "triangles": "Треугольники",
+        "diamonds": "Ромбы",
+        "lines": "Линии"
+    },
+
+    "rarities": {
+        "common": "Обычный",
+        "rare": "Редкий",
+        "epic": "Эпический",
+        "mythic": "Мифический",
+        "legendary": "Легендарный"
+    },
+    
+    "base_colors": {
+        "white": "Белый",
+        "red": "Красный",
+        "orange": "Оранжевый",
+        "yellow": "Желтый",
+        "green": "Зеленый",
+        "cyan": "Голубой",
+        "blue": "Синий",
+        "purple": "Фиолетовый"
+    }
+}

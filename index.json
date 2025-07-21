@@ -1,0 +1,116 @@
+{
+    "chances": {
+        "base_colors": {
+            "white": 2,
+            "red": 14,
+            "orange": 14,
+            "yellow": 14,
+            "green": 14,
+            "cyan": 14,
+            "blue": 14,
+            "purple": 14
+        },
+
+        "players": {
+            "often": 60,
+            "common": 30,
+            "rare": 10
+        },
+
+        "backgrounds": {
+            "squares": 35,
+            "circles": 25,
+            "triangles": 20,
+            "diamonds": 15,
+            "lines": 5
+        },
+
+        "rarities": {
+            "common": 48,
+            "rare": 31,
+            "epic": 18,
+            "mythic": 8,
+            "legendary": 5
+        }
+    },
+
+
+    "players": {
+        "often": [
+            "ThirteenCash155",
+            "NotAMonster2546",
+            "brazio8973",
+            "Fianirok02",
+            "transformerZOV",
+            "Ladn01",
+            "Loloplay141628",
+            "NaysDeni",
+            "Kokarevaleksey9",
+            "LapisMYT",
+            "Kerpichikken",
+            "Mihadomnic12",
+            "Festrik37",
+            "snoitaminaoeL",
+            "Smart_1785",
+            "gilitorci",
+            "ProKarToshe4ka",
+            "TRizun3457",
+            "Andgello227",
+            "Myarf",
+            "Exoss2719",
+            "FanTik3151",
+            "ananasbedrock59",
+            "Movdig",
+            "lek1on64",
+            "Zairon8853",
+            "skwiiiiik",
+            "Flipflop999h",
+            "Teakmarble16548",
+            "inostranec3348",
+            "ShReK0007333",
+            "dggdgdggd4098"
+        ],
+
+        "common": [
+            "belluga3094",
+            "LEOANIMATION802",
+            "PuzzleTeas",
+            "The_Morgue1462",
+            "Goldenbooklover",
+            "LanF1E",
+            "Biliano8902",
+            "Exserd",
+            "ARISTOKRAT1099",
+            "IolDiymond",
+            "Seyman76",
+            "Dungeonerrr"
+        ],
+
+        "rare": [
+            "Der41rcool1",
+            "MrSeventiss",
+            "ZetiCks4735",
+            "Kori4675",
+            "FrakCuprum",
+            "AquaCereal12",
+            "deport36",
+            "Hahanansk1",
+            "ScyaN8297",
+            "RIvDY",
+            "mraiR69",
+            "AdoredOO",
+            "t0n43635"
+        ]
+    },
+
+    "base_colors": {
+        "white": "#ddf9ff",
+        "blue": "#203ed0",
+        "red": "#ca0b2b",
+        "orange": "#db6520",
+        "yellow": "#e9bc1f",
+        "green": "#38ca21",
+        "cyan": "#33d0ce",
+        "purple": "#6d31db"
+    }
+}
