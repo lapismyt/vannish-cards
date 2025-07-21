@@ -28,6 +28,7 @@ from .database import (
     get_last_number_card,
     get_user_by_id,
     get_user_cards,
+    update_last_card_time,
 )
 from .randomizer import random_render_config
 from .render import RenderConfig, render
@@ -241,6 +242,7 @@ async def gen_and_send_card(session: Session, user: SavedUser, message_id: int):
         )
 
         add_card(session, card)
+        update_last_card_time(session, user.user_id)
 
 
 async def handle_chat(chat: Chat, enable_private: bool = False) -> bool:

@@ -84,3 +84,13 @@ def get_card_by_number(session: Session, card_number: int) -> SavedCard | None:
     return session.exec(
         select(SavedCard).where(SavedCard.number == card_number)
     ).one_or_none()
+
+
+def update_last_card_time(session: Session, user_id: int):
+    statement = (
+        update(SavedUser)
+        .where(SavedUser.user_id == user_id)  # type: ignore
+        .values(last_card=datetime.now())
+    )
+    session.exec(statement)  # type: ignore
+    session.commit()

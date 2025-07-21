@@ -1,4 +1,5 @@
 import asyncio
+from datetime import datetime, timedelta
 
 from aiogram import F
 from aiogram.enums.chat_member_status import ChatMemberStatus
@@ -187,7 +188,15 @@ async def take_card(message: Message, engine: Engine):
     if saved_user is None:
         raise ValueError("User not found")
 
-    await gen_and_send_card(session, saved_user, message.message_id)
+    if saved_user.last_card + timedelta(days=1) > datetime.now():
+        remaining_hours = (
+            saved_user.last_card + timedelta(days=1) - datetime.now()
+        ).total_seconds() / 3600
+        return await message.reply(
+            f"Вы сможете получить карточку только через {remaining_hours} ч."
+        )
+
+    return await gen_and_send_card(session, saved_user, message.message_id)
 
 
 @dp.callback_query(CallbackQueryFilter(callback_data=OpenCardsCollection))
