@@ -371,7 +371,11 @@ async def main():
     # render_config.number = 1
     # render(render_config).show()
 
-    connect_args: dict = {"check_same_thread": False}
+    if config["database_uri"].startswith("sqlite"):
+        connect_args: dict = {"check_same_thread": False}
+    else:
+        connect_args: dict = {}
+        
     engine: Engine = create_engine(
         config["database_uri"], connect_args=connect_args, pool_size=10, max_overflow=20
     )
