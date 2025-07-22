@@ -89,6 +89,10 @@ async def my_chat_member(update: ChatMemberUpdated, engine: Engine):
 async def start(message: Message, engine: Engine):
     session = Session(engine)
     # print(message.chat.id)
+
+    if message.forward_from or message.forward_from_chat or message.forward_sender_name:
+        return
+
     if not await handle_chat(message.chat):
         return
     from_user = message.from_user
@@ -102,6 +106,9 @@ async def start(message: Message, engine: Engine):
 @dp.message(Command("коллекция", "collection", "карточки", "cards", prefix="/!."))
 async def check_collection(message: Message, engine: Engine):
     session = Session(engine)
+
+    if message.forward_from or message.forward_from_chat or message.forward_sender_name:
+        return
 
     if not await handle_chat(message.chat):
         return
@@ -141,6 +148,7 @@ async def check_collection(message: Message, engine: Engine):
 
 @dp.message(Command("card", "карточка", prefix="/!."))
 async def simple_card(message: Message, engine: Engine):
+    
     if message.text is None:
         return
     if len(message.text.split()) == 1:
@@ -153,6 +161,9 @@ async def simple_card(message: Message, engine: Engine):
 )
 async def check_card(message: Message, engine: Engine):
     session = Session(engine)
+
+    if message.forward_from or message.forward_from_chat or message.forward_sender_name:
+        return
 
     # print(message.chat.id)
     if not await handle_chat(message.chat):
@@ -178,6 +189,9 @@ async def check_card(message: Message, engine: Engine):
 )
 async def take_card(message: Message, engine: Engine):
     session = Session(engine)
+
+    if message.forward_from or message.forward_from_chat or message.forward_sender_name:
+        return
 
     # print(message.chat.id)
     if not await handle_chat(message.chat):
