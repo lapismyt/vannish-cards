@@ -193,7 +193,7 @@ async def take_card(message: Message, engine: Engine):
             saved_user.last_card + timedelta(days=1) - datetime.now()
         ).total_seconds() / 3600
         return await message.reply(
-            f"Вы сможете получить карточку только через {remaining_hours} ч."
+            f"Вы сможете получить карточку только через {round(remaining_hours, 1)} ч."
         )
 
     return await gen_and_send_card(session, saved_user, message.message_id)
