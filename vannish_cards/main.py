@@ -382,6 +382,7 @@ async def main():
 
     SQLModel.metadata.create_all(engine)
 
+    await bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(bot, engine=engine)
 
 
