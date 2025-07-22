@@ -375,9 +375,9 @@ async def main():
         connect_args: dict = {"check_same_thread": False}
     else:
         connect_args: dict = {}
-        
+
     engine: Engine = create_engine(
-        config["database_uri"], connect_args=connect_args, pool_size=10, max_overflow=20
+        config["database_uri"], connect_args=connect_args, pool_size=config["pool_size"], max_overflow=20
     )
 
     SQLModel.metadata.create_all(engine)

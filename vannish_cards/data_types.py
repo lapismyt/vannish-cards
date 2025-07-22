@@ -54,6 +54,7 @@ class Config(TypedDict):
     database_uri: str
     owner_id: list[int]
     chat_id: int
+    pool_size: int
 
 
 class Chances(TypedDict):
