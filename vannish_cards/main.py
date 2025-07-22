@@ -5,7 +5,12 @@ from aiogram import F
 from aiogram.enums.chat_member_status import ChatMemberStatus
 from aiogram.filters import Command
 from aiogram.filters.callback_data import CallbackQueryFilter
-from aiogram.types import CallbackQuery, ChatMemberUpdated, ErrorEvent, Message
+from aiogram.types import (
+    CallbackQuery,
+    ChatMemberUpdated,
+    ErrorEvent,
+    Message,
+)
 from loguru import logger
 from sqlalchemy import Engine
 from sqlmodel import Session, SQLModel, create_engine
@@ -252,7 +257,9 @@ async def card_callback(callback_query: CallbackQuery, engine: Engine):
 
     data = OpenCard.unpack(callback_query.data)
     await send_card_info(session, data.card_id, callback_query.message.message_id)
-    await callback_query.answer()
+
+    if isinstance(callback_query.message, Message):
+        await callback_query.message.delete()
 
 
 @dp.message(F.text.lower().strip() == "шанс")
@@ -346,7 +353,9 @@ async def main():
     # render(render_config).show()
 
     connect_args: dict = {"check_same_thread": False}
-    engine: Engine = create_engine(config["database_uri"], connect_args=connect_args, pool_size=10, max_overflow=20)
+    engine: Engine = create_engine(
+        config["database_uri"], connect_args=connect_args, pool_size=10, max_overflow=20
+    )
 
     SQLModel.metadata.create_all(engine)
 

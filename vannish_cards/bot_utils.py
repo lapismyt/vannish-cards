@@ -5,7 +5,7 @@ from uuid import uuid4
 from aiogram.exceptions import TelegramForbiddenError, TelegramNotFound
 from aiogram.types import Chat, FSInputFile, InlineKeyboardButton, InputMediaPhoto, User
 from aiogram.utils.keyboard import InlineKeyboardBuilder
-from aiogram.utils.markdown import hbold, hcode, text
+from aiogram.utils.markdown import hbold, hcode, hlink, text
 from loguru import logger
 from sqlmodel import Session
 
@@ -236,7 +236,7 @@ async def gen_and_send_card(session: Session, user: SavedUser, message_id: int):
         await msg.edit_media(
             media=InputMediaPhoto(
                 media=FSInputFile(f"output/{render_config.number}.png"),
-                caption=get_card_desciption_html(card),
+                caption=get_card_desciption_html(session, card),
                 parse_mode="HTML",
             ),
         )
@@ -247,7 +247,7 @@ async def gen_and_send_card(session: Session, user: SavedUser, message_id: int):
 
 async def handle_chat(chat: Chat, enable_private: bool = False) -> bool:
     logger.info(chat.id)
-    
+
     if chat.type == "private":
         try:
             await bot.send_message(chat.id, "Я не могу работать в этом чате!")
@@ -309,7 +309,7 @@ def get_card_desciption(card: SavedCard) -> str:
     return msg
 
 
-def get_card_desciption_html(card: SavedCard) -> str:
+def get_card_desciption_html(session: Session, card: SavedCard) -> str:
     # msg = f"Номер: {hcode(str(card.number))}\n"
     msg = text(hbold("Номер:"), hcode(str(card.number)), "\n")
 
@@ -338,6 +338,24 @@ def get_card_desciption_html(card: SavedCard) -> str:
         hbold("Редкость:"),
         hcode(names["rarities"][card.rarity.value]),
         f"({rarity_chance}%)\n",
+    )
+
+    owner = get_user_by_id(session, card.user_id)
+
+    if owner is None:
+        return msg
+
+    if owner.username is not None:
+        link = f"https://t.me/{owner.username}"
+    else:
+        link = f"tg://openmessage?user_id={owner.user_id}"
+
+    msg += text(
+        hbold("Владелец: "),
+        hlink(
+            str(owner.username if owner.username is not None else owner.user_id), link
+        ),
+        "\n",
     )
 
     return msg
