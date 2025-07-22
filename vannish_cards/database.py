@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from sqlalchemy import Engine
-from sqlmodel import BigInteger, Field, Session, SQLModel, select, update
+from sqlmodel import BigInteger, Column, Field, Session, SQLModel, select, update
 
 from .data_types import (
     BackgroundEnum,
@@ -11,7 +11,7 @@ from .data_types import (
 
 
 class SavedUser(SQLModel, table=True):
-    user_id: BigInteger = Field(primary_key=True)
+    user_id: int = Field(sa_column=Column(BigInteger(), primary_key=True, autoincrement=False))
     username: str | None = Field(default=None)
     cards_count: int = Field(default=0)
     last_card: datetime = Field(default=datetime(2000, 1, 1, 0, 0, 0))
