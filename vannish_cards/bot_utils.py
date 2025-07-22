@@ -163,7 +163,7 @@ async def send_card_info(session: Session, card_number: int, message_id: int):
     await bot.send_photo(
         chat_id=config["chat_id"],
         photo=FSInputFile(f"output/{card.number}.png"),
-        caption=get_card_desciption(card),
+        caption=get_card_desciption_html(session, card),
         reply_to_message_id=message_id,
         parse_mode="HTML",
     )
@@ -288,7 +288,7 @@ def player_rarity_by_nickname(nickname: str) -> PlayerRarityEnum | None:
     return None
 
 
-def get_card_desciption(card: SavedCard) -> str:
+def get_card_desciption(session: Session, card: SavedCard) -> str:
     msg = f"Номер: {card.number}\n"
 
     msg += f"Игрок: {card.nickname}\n"
@@ -305,6 +305,14 @@ def get_card_desciption(card: SavedCard) -> str:
 
     rarity_chance = index["chances"]["rarities"][card.rarity.value]
     msg += f"Редкость: {names['rarities'][card.rarity.value]} ({rarity_chance}%)\n"
+
+    owner = get_user_by_id(session, card.user_id)
+
+    if owner is None:
+        logger.info(card.user_id)
+        return msg
+
+    msg += f"Владелец: {owner.username if owner.username is not None else owner.user_id}\n"
 
     return msg
 
