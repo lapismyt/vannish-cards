@@ -312,7 +312,9 @@ def get_card_desciption(session: Session, card: SavedCard) -> str:
         logger.info(card.user_id)
         return msg
 
-    msg += f"Владелец: {owner.username if owner.username is not None else owner.user_id}\n"
+    msg += (
+        f"Владелец: {owner.username if owner.username is not None else owner.user_id}\n"
+    )
 
     return msg
 
@@ -360,7 +362,7 @@ def get_card_desciption_html(session: Session, card: SavedCard) -> str:
         link = f"tg://openmessage?user_id={owner.user_id}"
 
     msg += text(
-        hbold("Владелец: "),
+        hbold("Владелец:"),
         hlink(
             str(owner.username if owner.username is not None else owner.user_id), link
         ),
