@@ -343,6 +343,7 @@ def get_card_desciption_html(session: Session, card: SavedCard) -> str:
     owner = get_user_by_id(session, card.user_id)
 
     if owner is None:
+        logger.info(card.user_id)
         return msg
 
     if owner.username is not None:
