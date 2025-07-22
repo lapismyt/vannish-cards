@@ -1,13 +1,7 @@
 from datetime import datetime
 
 from sqlalchemy import Engine
-from sqlmodel import (
-    Field,
-    Session,
-    SQLModel,
-    select,
-    update,
-)
+from sqlmodel import BigInteger, Field, Session, SQLModel, select, update
 
 from .data_types import (
     BackgroundEnum,
@@ -17,15 +11,15 @@ from .data_types import (
 
 
 class SavedUser(SQLModel, table=True):
-    user_id: int = Field(primary_key=True)
+    user_id: BigInteger = Field(primary_key=True)
     username: str | None = Field(default=None)
     cards_count: int = Field(default=0)
     last_card: datetime = Field(default=datetime(2000, 1, 1, 0, 0, 0))
 
 
 class SavedCard(SQLModel, table=True):
-    card_id: int | None = Field(default=None, primary_key=True)
-    user_id: int = Field(index=True)
+    card_id: BigInteger | None = Field(default=None, primary_key=True)
+    user_id: BigInteger = Field(index=True)
     nickname: str
     number: int | None = Field(default=None, unique=True)
     rarity: RarityEnum
