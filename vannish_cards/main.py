@@ -193,9 +193,9 @@ async def take_card(message: Message, engine: Engine):
     if saved_user is None:
         raise ValueError("User not found")
 
-    if saved_user.last_card + timedelta(days=1) > datetime.now():
+    if saved_user.last_card + timedelta(hours=6) > datetime.now():
         remaining_hours = (
-            saved_user.last_card + timedelta(days=1) - datetime.now()
+            saved_user.last_card + timedelta(hours=6) - datetime.now()
         ).total_seconds() / 3600
         return await message.reply(
             f"Вы сможете получить карточку только через {round(remaining_hours, 1)} ч."
