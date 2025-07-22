@@ -148,6 +148,8 @@ async def send_card_info(session: Session, card_number: int, message_id: int):
         )
 
     if not os.path.exists(f"output/{card.number}.png"):
+        await bot.send_chat_action(config["chat_id"], "upload_photo")
+        
         render_config = RenderConfig(
             base_color=get_base_color(card.base_color.value),
             background_type=card.background.value,
@@ -197,6 +199,7 @@ async def render_custom_card(message_id: int, render_config: RenderConfig):
 
 
 async def gen_and_send_card(session: Session, user: SavedUser, message_id: int):
+    await bot.send_chat_action(config["chat_id"], "upload_photo")
     msg = await bot.send_message(
         config["chat_id"], "Создаю карточку...", reply_to_message_id=message_id
     )
