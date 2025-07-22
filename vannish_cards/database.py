@@ -18,8 +18,8 @@ class SavedUser(SQLModel, table=True):
 
 
 class SavedCard(SQLModel, table=True):
-    card_id: BigInteger | None = Field(default=None, primary_key=True)
-    user_id: BigInteger = Field(index=True)
+    card_id: int | None = Field(default=None, primary_key=True)
+    user_id: int = Field(sa_column=Column(BigInteger(), nullable=False, index=True))
     nickname: str
     number: int | None = Field(default=None, unique=True)
     rarity: RarityEnum
