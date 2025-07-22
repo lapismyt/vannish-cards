@@ -246,6 +246,8 @@ async def gen_and_send_card(session: Session, user: SavedUser, message_id: int):
 
 
 async def handle_chat(chat: Chat, enable_private: bool = False) -> bool:
+    logger.info(chat.id)
+    
     if chat.type == "private":
         try:
             await bot.send_message(chat.id, "Я не могу работать в этом чате!")
