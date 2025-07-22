@@ -281,6 +281,11 @@ async def chance(message: Message, engine: Engine):
     return await take_card(message, engine)
 
 
+@dp.message(F.text.lower().startwith("карточка "))
+async def card_short(message: Message, engine: Engine):
+    return await check_card(message, engine)
+
+
 @dp.message(F.text.lower().startswith("коллекция"))
 async def collection_short(message: Message, engine: Engine):
     return await check_collection(message, engine)
