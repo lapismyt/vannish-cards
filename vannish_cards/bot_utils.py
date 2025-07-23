@@ -174,7 +174,8 @@ async def send_card_info(session: Session, card_number: int, message_id: int, di
             reply_to_message_id=message_id,
             parse_mode="HTML",
         )
-    except (TelegramForbiddenError, TelegramNotFound, TelegramBadRequest):
+    except (TelegramForbiddenError, TelegramNotFound, TelegramBadRequest) as exc:
+        logger.warning(repr(exc))
         return False
 
     return True
