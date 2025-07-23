@@ -212,9 +212,9 @@ async def take_card(message: Message, engine: Engine):
             saved_user.last_card + timedelta(hours=6) - datetime.now()
         ).total_seconds()
         last_seconds = remaining_seconds % 60
-        remaining_minutes = remaining_seconds - last_seconds
+        remaining_minutes = (remaining_seconds - last_seconds) / 60
         last_minutes = remaining_minutes % 60
-        remaining_hours = remaining_minutes - last_minutes
+        remaining_hours = (remaining_minutes - last_minutes) / 60
         last_hours = remaining_hours
 
         str_time = f"{last_hours} ч. / {last_minutes} м. / {last_seconds}с."
