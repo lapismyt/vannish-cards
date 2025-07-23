@@ -2,7 +2,11 @@ import asyncio
 import os
 from uuid import uuid4
 
-from aiogram.exceptions import TelegramForbiddenError, TelegramNotFound
+from aiogram.exceptions import (
+    TelegramBadRequest,
+    TelegramForbiddenError,
+    TelegramNotFound,
+)
 from aiogram.types import Chat, FSInputFile, InlineKeyboardButton, InputMediaPhoto, User
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from aiogram.utils.markdown import hbold, hcode, hlink, text
@@ -140,7 +144,7 @@ async def send_cards_collection(
     return
 
 
-async def send_card_info(session: Session, card_number: int, message_id: int):
+async def send_card_info(session: Session, card_number: int, message_id: int, direct: bool = True):
     card: SavedCard | None = get_card_by_number(session, card_number)
     if card is None:
         return await bot.send_message(
@@ -162,13 +166,20 @@ async def send_card_info(session: Session, card_number: int, message_id: int):
 
         rendered.save(f"output/{card.number}.png")
 
-    await bot.send_photo(
-        chat_id=config["chat_id"],
-        photo=FSInputFile(f"output/{card.number}.png"),
-        caption=get_card_desciption_html(session, card),
-        reply_to_message_id=message_id,
-        parse_mode="HTML",
-    )
+    try:
+        await bot.send_photo(
+            chat_id=config["chat_id"] if not direct else card.user_id,
+            photo=FSInputFile(f"output/{card.number}.png"),
+            caption=get_card_desciption_html(session, card),
+            reply_to_message_id=message_id,
+            parse_mode="HTML",
+        )
+    except (TelegramForbiddenError, TelegramNotFound, TelegramBadRequest):
+        await bot.send_message(config["chat_id"], "Сначала напишите /start боту.", reply_to_message_id=message_id)
+        return
+    
+    # if direct:
+    #     await bot.send_message(card.user_id, f"Карточка #{card.number} отправлена в лс!", reply_to_message_id=message_id)
 
 
 async def render_custom_card(message_id: int, render_config: RenderConfig):
@@ -292,7 +303,7 @@ def player_rarity_by_nickname(nickname: str) -> PlayerRarityEnum | None:
 
 
 def get_card_desciption(session: Session, card: SavedCard) -> str:
-    msg = f"Номер: {card.number}\n"
+    msg = f"Номер: #{card.number}\n"
 
     msg += f"Игрок: {card.nickname}\n"
 
@@ -324,7 +335,7 @@ def get_card_desciption(session: Session, card: SavedCard) -> str:
 
 def get_card_desciption_html(session: Session, card: SavedCard) -> str:
     # msg = f"Номер: {hcode(str(card.number))}\n"
-    msg = text(hbold("Номер:"), hcode(str(card.number)), "\n")
+    msg = text(hbold("Номер:"), "#" + str(card.number), "\n")
 
     # msg += f"Игрок: {card.nickname}\n"
     msg += text(hbold("Игрок:"), hcode(card.nickname), "\n")

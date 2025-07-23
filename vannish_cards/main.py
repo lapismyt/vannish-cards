@@ -36,6 +36,8 @@ from .database import (
 from .filters import validate_user_id, validate_username
 from .render import RenderConfig
 
+DIRECT = True
+
 
 @dp.chat_member()
 async def chat_member(update: ChatMemberUpdated, engine: Engine):
@@ -280,8 +282,11 @@ async def card_callback(callback_query: CallbackQuery, engine: Engine):
     data = OpenCard.unpack(callback_query.data)
     await send_card_info(session, data.card_id, callback_query.message.message_id)
 
-    if isinstance(callback_query.message, Message):
-        await callback_query.message.delete()
+    if DIRECT:
+        await callback_query.answer("Карточка отправлена в лс!", show_alert=True)
+
+    # if isinstance(callback_query.message, Message):
+        # await callback_query.message.delete()
 
 
 @dp.message(F.text.lower().strip() == "шанс")
