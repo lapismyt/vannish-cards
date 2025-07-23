@@ -145,8 +145,15 @@ async def send_cards_collection(
 
 
 async def send_card_info(
-    session: Session, card_number: int, message_id: int, direct: bool = True
+    session: Session,
+    card_number: int,
+    message_id: int,
+    direct: bool = True,
+    user_id: int | None = None,
 ):
+    if user_id is None and direct:
+        raise ValueError("Direct message must have user_id")
+
     card: SavedCard | None = get_card_by_number(session, card_number)
     if card is None:
         return await bot.send_message(
@@ -170,7 +177,7 @@ async def send_card_info(
 
     try:
         await bot.send_photo(
-            chat_id=config["chat_id"] if not direct else card.user_id,
+            chat_id=config["chat_id"] if not direct else user_id,  # type: ignore
             photo=FSInputFile(f"output/{card.number}.png"),
             caption=get_card_desciption_html(session, card),
             reply_to_message_id=message_id if not direct else None,
