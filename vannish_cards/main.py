@@ -217,7 +217,7 @@ async def take_card(message: Message, engine: Engine):
         remaining_hours = (remaining_minutes - last_minutes) / 60
         last_hours = remaining_hours
 
-        str_time = f"{last_hours} ч. / {last_minutes} м. / {last_seconds}с."
+        str_time = f"{round(last_hours)} ч. / {round(last_minutes)} м. / {round(last_seconds)}с."
 
         return await message.reply(
             f"Вы сможете получить карточку только через {str_time}"
