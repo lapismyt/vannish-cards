@@ -175,8 +175,9 @@ async def send_card_info(session: Session, card_number: int, message_id: int, di
             parse_mode="HTML",
         )
     except (TelegramForbiddenError, TelegramNotFound, TelegramBadRequest):
-        await bot.send_message(config["chat_id"], "Сначала напишите /start боту.", reply_to_message_id=message_id)
-        return
+        return False
+
+    return True
     
     # if direct:
     #     await bot.send_message(card.user_id, f"Карточка #{card.number} отправлена в лс!", reply_to_message_id=message_id)

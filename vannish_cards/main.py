@@ -181,7 +181,10 @@ async def check_card(message: Message, engine: Engine):
         return
     card_number = int(args[1])
 
-    await send_card_info(session, card_number, message.message_id)
+    if await send_card_info(session, card_number, message.message_id, direct=DIRECT):
+        await message.reply("Карточка отправлена в лс!")
+    else:
+        await message.reply("Сначала напишите /start боту!")
 
 
 @dp.message(
@@ -280,10 +283,10 @@ async def card_callback(callback_query: CallbackQuery, engine: Engine):
         return
 
     data = OpenCard.unpack(callback_query.data)
-    await send_card_info(session, data.card_id, callback_query.message.message_id)
-
-    if DIRECT:
+    if await send_card_info(session, data.card_id, callback_query.message.message_id, direct=DIRECT):
         await callback_query.answer("Карточка отправлена в лс!", show_alert=True)
+    else:
+        await callback_query.answer("Сначала напишите /start боту!", show_alert=True)
 
     # if isinstance(callback_query.message, Message):
         # await callback_query.message.delete()
