@@ -150,7 +150,6 @@ async def check_collection(message: Message, engine: Engine):
 
 @dp.message(Command("card", "карточка", prefix="/!."))
 async def simple_card(message: Message, engine: Engine):
-    
     if message.text is None:
         return
     if len(message.text.split()) == 1:
@@ -283,13 +282,15 @@ async def card_callback(callback_query: CallbackQuery, engine: Engine):
         return
 
     data = OpenCard.unpack(callback_query.data)
-    if await send_card_info(session, data.card_id, callback_query.message.message_id, direct=DIRECT):
+    if await send_card_info(
+        session, data.card_id, callback_query.message.message_id, direct=DIRECT
+    ):
         await callback_query.answer("Карточка отправлена в лс!", show_alert=True)
     else:
         await callback_query.answer("Сначала напишите /start боту!", show_alert=True)
 
     # if isinstance(callback_query.message, Message):
-        # await callback_query.message.delete()
+    # await callback_query.message.delete()
 
 
 @dp.message(F.text.lower().strip() == "шанс")
@@ -393,7 +394,10 @@ async def main():
         connect_args: dict = {}
 
     engine: Engine = create_engine(
-        config["database_uri"], connect_args=connect_args, pool_size=config["pool_size"], max_overflow=50
+        config["database_uri"],
+        connect_args=connect_args,
+        pool_size=config["pool_size"],
+        max_overflow=50,
     )
 
     SQLModel.metadata.create_all(engine)

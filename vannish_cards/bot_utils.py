@@ -144,7 +144,9 @@ async def send_cards_collection(
     return
 
 
-async def send_card_info(session: Session, card_number: int, message_id: int, direct: bool = True):
+async def send_card_info(
+    session: Session, card_number: int, message_id: int, direct: bool = True
+):
     card: SavedCard | None = get_card_by_number(session, card_number)
     if card is None:
         return await bot.send_message(
@@ -153,7 +155,7 @@ async def send_card_info(session: Session, card_number: int, message_id: int, di
 
     if not os.path.exists(f"output/{card.number}.png"):
         await bot.send_chat_action(config["chat_id"], "upload_photo")
-        
+
         render_config = RenderConfig(
             base_color=get_base_color(card.base_color.value),
             background_type=card.background.value,
@@ -171,7 +173,7 @@ async def send_card_info(session: Session, card_number: int, message_id: int, di
             chat_id=config["chat_id"] if not direct else card.user_id,
             photo=FSInputFile(f"output/{card.number}.png"),
             caption=get_card_desciption_html(session, card),
-            reply_to_message_id=message_id,
+            reply_to_message_id=message_id if not direct else None,
             parse_mode="HTML",
         )
     except (TelegramForbiddenError, TelegramNotFound, TelegramBadRequest) as exc:
@@ -179,7 +181,7 @@ async def send_card_info(session: Session, card_number: int, message_id: int, di
         return False
 
     return True
-    
+
     # if direct:
     #     await bot.send_message(card.user_id, f"Карточка #{card.number} отправлена в лс!", reply_to_message_id=message_id)
 
@@ -266,7 +268,11 @@ async def handle_chat(chat: Chat, enable_private: bool = False) -> bool:
 
     if chat.type == "private":
         try:
-            await bot.send_message(chat.id, "Я не могу работать в этом чате!")
+            await bot.send_message(
+                chat.id,
+                text("Это бот для чата", hlink("ВАННИШ", "https://t.me/vannishUSE")),
+                parse_mode="HTML",
+            )
         except (TelegramForbiddenError, TelegramNotFound):
             pass
         return False
