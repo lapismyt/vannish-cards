@@ -207,9 +207,9 @@ async def take_card(message: Message, engine: Engine):
     if saved_user is None:
         raise ValueError("User not found")
 
-    if saved_user.last_card + timedelta(hours=6) > datetime.now():
+    if saved_user.last_card + timedelta(hours=12) > datetime.now():
         remaining_seconds = (
-            saved_user.last_card + timedelta(hours=6) - datetime.now()
+            saved_user.last_card + timedelta(hours=12) - datetime.now()
         ).total_seconds()
         last_seconds = remaining_seconds % 60
         remaining_minutes = (remaining_seconds - last_seconds) / 60
