@@ -390,7 +390,7 @@ async def main():
         connect_args: dict = {}
 
     engine: Engine = create_engine(
-        config["database_uri"], connect_args=connect_args, pool_size=config["pool_size"], max_overflow=20
+        config["database_uri"], connect_args=connect_args, pool_size=config["pool_size"], max_overflow=50
     )
 
     SQLModel.metadata.create_all(engine)

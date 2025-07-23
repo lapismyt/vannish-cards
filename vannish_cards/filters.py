@@ -2,7 +2,7 @@ def validate_username(username: str) -> bool:
     if not (17 > len(username) > 4):
         return False
 
-    if not username.isalnum():
+    if not username.replace('_', '').isalnum():
         return False
 
     return True
