@@ -348,9 +348,10 @@ async def render_card(message: Message, engine: Engine):
         return
     from_user = message.from_user
     if from_user is None:
-        logger.info("Not passed user check")
+        logger.info("Not passed user check (none)")
         return
     if not await handle_user(session, from_user):
+        logger.info("Not passed user check")
         return
     if from_user.id not in config["owner_id"]:
         return await message.reply("Только владелец может использовать эту команду")
