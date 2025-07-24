@@ -323,21 +323,6 @@ async def collection_short(message: Message, engine: Engine):
     return await check_collection(message, engine)
 
 
-@dp.message(F.text)
-async def text_message(message: Message, engine: Engine):
-    session = Session(engine)
-
-    if not await handle_chat(message.chat, True):
-        return
-
-    from_user = message.from_user
-    if from_user is None:
-        return
-
-    if not await handle_user(session, from_user):
-        return
-
-
 @dp.message(Command("render", "рендер", prefix="/!."))
 async def render_card(message: Message, engine: Engine):
     session = Session(engine)
@@ -399,6 +384,21 @@ async def render_card(message: Message, engine: Engine):
     logger.info("Rendering card")
 
     return await render_custom_card(message.message_id, render_config)
+
+
+@dp.message(F.text)
+async def text_message(message: Message, engine: Engine):
+    session = Session(engine)
+
+    if not await handle_chat(message.chat, True):
+        return
+
+    from_user = message.from_user
+    if from_user is None:
+        return
+
+    if not await handle_user(session, from_user):
+        return
 
 
 @dp.error()
