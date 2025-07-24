@@ -395,8 +395,8 @@ async def del_message(message: Message, engine: Engine):
     
     try:
         await bot.delete_message(int(args[0]), int(args[1]))
-    except:
-        pass
+    except BaseException as exc:
+        logger.exception(exc)
 
 
 @dp.message(F.text)
