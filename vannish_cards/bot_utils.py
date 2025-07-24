@@ -273,19 +273,19 @@ async def gen_and_send_card(session: Session, user: SavedUser, message_id: int):
 async def handle_chat(chat: Chat, enable_private: bool = False) -> bool:
     logger.info(chat.id)
 
+    if chat.type == "private" and enable_private:
+        return True
+
     if chat.type == "private":
-        if not enable_private:
-            try:
-                await bot.send_message(
-                    chat.id,
-                    text("Это бот для чата", hlink("ВАННИШ", "https://t.me/vannishUSE")),
-                    parse_mode="HTML",
-                )
-            except (TelegramForbiddenError, TelegramNotFound):
-                pass
-            return False
-        else:
-            return True
+        try:
+            await bot.send_message(
+                chat.id,
+                text("Это бот для чата", hlink("ВАННИШ", "https://t.me/vannishUSE")),
+                parse_mode="HTML",
+            )
+        except (TelegramForbiddenError, TelegramNotFound):
+            pass
+        return False
 
     if chat.id != config["chat_id"]:
         try:
