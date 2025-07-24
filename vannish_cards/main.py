@@ -370,6 +370,35 @@ async def render_card(message: Message, engine: Engine):
     return await render_custom_card(message.message_id, render_config, from_user.id)
 
 
+@dp.message(Command("del", "delete", "удалить", prefix="/!."))
+async def del_message(message: Message, engine: Engine):
+    session = Session(engine)
+
+    if not await handle_chat(message.chat, True):
+        return
+
+    from_user = message.from_user
+    if from_user is None:
+        return
+
+    if not await handle_user(session, from_user):
+        return
+
+    if from_user.id not in config["owner_id"]:
+        return await message.reply("Только владелец может использовать эту команду")
+    if message.text is None:
+        return
+    
+    args: list[str] = message.text.split()
+    if len(args) < 2:
+        return await message.reply("Не хватает аргументов")
+    
+    try:
+        await bot.delete_message(int(args[0]), int(args[1]))
+    except:
+        pass
+
+
 @dp.message(F.text)
 async def text_message(message: Message, engine: Engine):
     session = Session(engine)
