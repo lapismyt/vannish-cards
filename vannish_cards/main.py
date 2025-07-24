@@ -169,7 +169,7 @@ async def check_card(message: Message, engine: Engine):
     # print(message.chat.id)
     if not await handle_chat(message.chat):
         return
-    
+
     if message.from_user is None:
         return
 
@@ -183,7 +183,6 @@ async def check_card(message: Message, engine: Engine):
     if not args[1].isdigit():
         return
     card_number = int(args[1])
-
 
     if await send_card_info(
         session,
@@ -238,7 +237,7 @@ async def take_card(message: Message, engine: Engine):
             f"Вы сможете получить карточку только через {str_time}"
         )
 
-    return await gen_and_send_card(session, saved_user, message.message_id)
+    return await gen_and_send_card(session, saved_user, message.message_id) # type: ignore
 
 
 @dp.callback_query(CallbackQueryFilter(callback_data=OpenCardsCollection))
@@ -311,6 +310,26 @@ async def card_callback(callback_query: CallbackQuery, engine: Engine):
 @dp.message(F.text.lower().strip() == "шанс")
 async def chance(message: Message, engine: Engine):
     return await take_card(message, engine)
+
+
+@dp.message(
+    F.text.lower().strip() == "супершанс" | F.text.lower().strip() == "супер шанс"
+)
+async def super_chance(message: Message, engine: Engine):
+    session = Session(engine)
+
+    if message.forward_from or message.forward_from_chat or message.forward_sender_name:
+        return
+
+    if not await handle_chat(message.chat):
+        return
+    if not await handle_user(session, message.from_user):
+        return
+
+    if message.from_user is None:
+        raise ValueError("User not found")
+
+    await message.reply("Не, бро, такого не будет")
 
 
 @dp.message(F.text.lower().startwith("карточка "))
@@ -388,11 +407,11 @@ async def del_message(message: Message, engine: Engine):
         return await message.reply("Только владелец может использовать эту команду")
     if message.text is None:
         return
-    
+
     args: list[str] = message.text.split()
     if len(args) < 3:
         return await message.reply("Не хватает аргументов")
-    
+
     try:
         await bot.delete_message(int(args[1]), int(args[2]))
     except BaseException as exc:

@@ -193,7 +193,9 @@ async def send_card_info(
     #     await bot.send_message(card.user_id, f"Карточка #{card.number} отправлена в лс!", reply_to_message_id=message_id)
 
 
-async def render_custom_card(message_id: int, render_config: RenderConfig, chat_id: int = config["chat_id"]):
+async def render_custom_card(
+    message_id: int, render_config: RenderConfig, chat_id: int = config["chat_id"]
+):
     tmsg = await bot.send_message(
         chat_id, "Создаю рендер...", reply_to_message_id=message_id
     )
