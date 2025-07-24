@@ -344,15 +344,18 @@ async def render_card(message: Message, engine: Engine):
 
     # print(message.chat.id)
     if not await handle_chat(message.chat, True):
+        logger.info("Not passed chat check")
         return
     from_user = message.from_user
     if from_user is None:
+        logger.info("Not passed user check")
         return
     if not await handle_user(session, from_user):
         return
     if from_user.id not in config["owner_id"]:
         return await message.reply("Только владелец может использовать эту команду")
     if message.text is None:
+        logger.info("Not passed text check")
         return
 
     args: list[str] = message.text.split()

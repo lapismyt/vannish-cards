@@ -274,6 +274,7 @@ async def handle_chat(chat: Chat, enable_private: bool = False) -> bool:
     logger.info(chat.id)
 
     if chat.type == "private" and enable_private:
+        logger.info("Private chat, enabled")
         return True
 
     if chat.type == "private":
