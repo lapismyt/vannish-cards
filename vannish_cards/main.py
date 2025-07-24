@@ -358,15 +358,21 @@ async def render_card(message: Message, engine: Engine):
     if message.text is None:
         logger.info("Not passed text check")
         return
+    
+    logger.info("Passed all checks")
 
     args: list[str] = message.text.split()
     if len(args) < 5:
         return await message.reply("Не хватает аргументов")
 
+    logger.info("Passed args block")
+
     if args[1].startswith("#"):
         base_color = args[1]
     else:
         base_color = get_base_color(args[1])  # type: ignore
+    
+    logger.info("Passed color block")
 
     background_type: Background = args[2]  # type: ignore
     rarity: Rarity = args[3]  # type: ignore
@@ -378,6 +384,8 @@ async def render_card(message: Message, engine: Engine):
         if not args[5].isdigit():
             return await message.reply("Некорректный номер")
         number = int(args[5])
+    
+    logger.info("Passed number block")
 
     render_config = RenderConfig(
         base_color=base_color,
