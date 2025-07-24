@@ -273,7 +273,7 @@ async def gen_and_send_card(session: Session, user: SavedUser, message_id: int):
 async def handle_chat(chat: Chat, enable_private: bool = False) -> bool:
     logger.info(chat.id)
 
-    if chat.type == "private":
+    if chat.type == "private" and not enable_private:
         try:
             await bot.send_message(
                 chat.id,
@@ -284,7 +284,7 @@ async def handle_chat(chat: Chat, enable_private: bool = False) -> bool:
             pass
         return False
 
-    if chat.id != config["chat_id"] and not enable_private:
+    if chat.id != config["chat_id"]:
         try:
             await bot.send_message(chat.id, "Я не могу работать в этом чате!")
         except (TelegramForbiddenError, TelegramNotFound):

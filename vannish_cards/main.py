@@ -169,6 +169,10 @@ async def check_card(message: Message, engine: Engine):
     # print(message.chat.id)
     if not await handle_chat(message.chat):
         return
+    
+    if message.from_user is None:
+        return
+
     if not await handle_user(session, message.from_user):
         return
     if message.text is None:
@@ -179,6 +183,7 @@ async def check_card(message: Message, engine: Engine):
     if not args[1].isdigit():
         return
     card_number = int(args[1])
+
 
     if await send_card_info(
         session,
