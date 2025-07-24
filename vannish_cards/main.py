@@ -390,11 +390,11 @@ async def del_message(message: Message, engine: Engine):
         return
     
     args: list[str] = message.text.split()
-    if len(args) < 2:
+    if len(args) < 3:
         return await message.reply("Не хватает аргументов")
     
     try:
-        await bot.delete_message(int(args[0]), int(args[1]))
+        await bot.delete_message(int(args[1]), int(args[2]))
     except BaseException as exc:
         logger.exception(exc)
 
