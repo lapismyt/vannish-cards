@@ -346,6 +346,7 @@ async def render_card(message: Message, engine: Engine):
     if not await handle_chat(message.chat, True):
         logger.info("Not passed chat check")
         return
+    logger.info("Passed chat check")
     from_user = message.from_user
     if from_user is None:
         logger.info("Not passed user check (none)")
