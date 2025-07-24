@@ -329,36 +329,25 @@ async def render_card(message: Message, engine: Engine):
 
     # print(message.chat.id)
     if not await handle_chat(message.chat, True):
-        logger.info("Not passed chat check")
         return
-    logger.info("Passed chat check")
     from_user = message.from_user
     if from_user is None:
-        logger.info("Not passed user check (none)")
         return
     if not await handle_user(session, from_user):
-        logger.info("Not passed user check")
         return
     if from_user.id not in config["owner_id"]:
         return await message.reply("Только владелец может использовать эту команду")
     if message.text is None:
-        logger.info("Not passed text check")
         return
-    
-    logger.info("Passed all checks")
 
     args: list[str] = message.text.split()
     if len(args) < 5:
         return await message.reply("Не хватает аргументов")
 
-    logger.info("Passed args block")
-
     if args[1].startswith("#"):
         base_color = args[1]
     else:
         base_color = get_base_color(args[1])  # type: ignore
-    
-    logger.info("Passed color block")
 
     background_type: Background = args[2]  # type: ignore
     rarity: Rarity = args[3]  # type: ignore
@@ -370,9 +359,6 @@ async def render_card(message: Message, engine: Engine):
         if not args[5].isdigit():
             return await message.reply("Некорректный номер")
         number = int(args[5])
-    
-    logger.info("Passed number block")
-
     render_config = RenderConfig(
         base_color=base_color,
         background_type=background_type,
@@ -381,9 +367,7 @@ async def render_card(message: Message, engine: Engine):
         number=number,
     )
 
-    logger.info("Rendering card")
-
-    return await render_custom_card(message.message_id, render_config)
+    return await render_custom_card(message.message_id, render_config, from_user.id)
 
 
 @dp.message(F.text)
