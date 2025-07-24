@@ -22,6 +22,7 @@
             "circles": 25,
             "triangles": 20,
             "diamonds": 15,
+            "crystals": 10,
             "lines": 5
         },
 

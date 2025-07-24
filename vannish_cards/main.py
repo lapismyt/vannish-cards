@@ -237,7 +237,7 @@ async def take_card(message: Message, engine: Engine):
             f"Вы сможете получить карточку только через {str_time}"
         )
 
-    return await gen_and_send_card(session, saved_user, message.message_id) # type: ignore
+    return await gen_and_send_card(session, saved_user, message.message_id)  # type: ignore
 
 
 @dp.callback_query(CallbackQueryFilter(callback_data=OpenCardsCollection))
