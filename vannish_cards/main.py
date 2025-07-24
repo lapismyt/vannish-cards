@@ -387,6 +387,8 @@ async def render_card(message: Message, engine: Engine):
         number=number,
     )
 
+    logger.info("Rendering card")
+
     return await render_custom_card(message.message_id, render_config)
 
 
