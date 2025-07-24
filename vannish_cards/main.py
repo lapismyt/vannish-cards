@@ -384,7 +384,7 @@ async def render_card(message: Message, engine: Engine):
         number=number,
     )
 
-    return await render_custom_card(message.message_id, render_config, from_user.id)
+    return await render_custom_card(message.message_id, render_config, message.chat.id)
 
 
 @dp.message(Command("del", "delete", "удалить", prefix="/!."))
