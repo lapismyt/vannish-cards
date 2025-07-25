@@ -4,7 +4,9 @@
         "circles": "Круги",
         "triangles": "Треугольники",
         "diamonds": "Ромбы",
-        "lines": "Линии"
+        "crystals": "Кристаллы",
+        "lines": "Линии",
+        "fee": "Плата"
     },
 
     "rarities": {
