@@ -23,7 +23,8 @@
             "triangles": 20,
             "diamonds": 15,
             "crystals": 10,
-            "lines": 5
+            "lines": 5,
+            "fee": 1
         },
 
         "rarities": {

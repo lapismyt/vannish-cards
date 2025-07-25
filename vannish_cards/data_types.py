@@ -9,7 +9,7 @@ BaseColor: TypeAlias = Literal[
 ]
 PlayerRarity: TypeAlias = Literal["often", "common", "rare"]
 Background: TypeAlias = Literal[
-    "squares", "circles", "triangles", "diamonds", "crystals", "lines"
+    "squares", "circles", "triangles", "diamonds", "crystals", "lines", "fee"
 ]
 
 
@@ -26,6 +26,7 @@ class BackgroundEnum(str, Enum):
     DIAMONDS = "diamonds"
     CRYSTALS = "crystals"
     LINES = "lines"
+    FEE = "fee"
 
 
 class RarityEnum(str, Enum):
