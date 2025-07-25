@@ -59,6 +59,7 @@ class Config(TypedDict):
     owner_id: list[int]
     chat_id: int
     pool_size: int
+    cooldown: int
 
 
 class Chances(TypedDict):

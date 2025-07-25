@@ -11,6 +11,7 @@ from aiogram.types import Chat, FSInputFile, InlineKeyboardButton, InputMediaPho
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from aiogram.utils.markdown import hbold, hcode, hlink, text
 from loguru import logger
+from datetime import datetime, timedelta
 from sqlmodel import Session
 
 from .bot import bot
@@ -229,6 +230,22 @@ async def gen_and_send_card(session: Session, user: SavedUser, message_id: int):
     )
 
     async with gen_card_lock:
+        if user.last_card + timedelta(seconds=config['cooldown']) > datetime.now():
+            remaining_seconds = (
+                user.last_card + timedelta(seconds=config['cooldown']) - datetime.now()
+            ).total_seconds()
+            last_seconds = remaining_seconds % 60
+            remaining_minutes = (remaining_seconds - last_seconds) / 60
+            last_minutes = remaining_minutes % 60
+            remaining_hours = (remaining_minutes - last_minutes) / 60
+            last_hours = remaining_hours
+
+            str_time = f"{round(last_hours)} ч. / {round(last_minutes)} м. / {round(last_seconds)}с."
+
+            return await msg.edit_text(
+                f"Вы сможете получить карточку только через {str_time}"
+            )
+    
         last_card = get_last_number_card(session)
         if last_card is None:
             number: int = 1

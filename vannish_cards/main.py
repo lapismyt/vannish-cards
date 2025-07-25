@@ -221,22 +221,6 @@ async def take_card(message: Message, engine: Engine):
     if saved_user is None:
         raise ValueError("User not found")
 
-    if saved_user.last_card + timedelta(hours=12) > datetime.now():
-        remaining_seconds = (
-            saved_user.last_card + timedelta(hours=12) - datetime.now()
-        ).total_seconds()
-        last_seconds = remaining_seconds % 60
-        remaining_minutes = (remaining_seconds - last_seconds) / 60
-        last_minutes = remaining_minutes % 60
-        remaining_hours = (remaining_minutes - last_minutes) / 60
-        last_hours = remaining_hours
-
-        str_time = f"{round(last_hours)} ч. / {round(last_minutes)} м. / {round(last_seconds)}с."
-
-        return await message.reply(
-            f"Вы сможете получить карточку только через {str_time}"
-        )
-
     return await gen_and_send_card(session, saved_user, message.message_id)  # type: ignore
 
 
