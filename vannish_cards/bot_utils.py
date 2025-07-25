@@ -200,6 +200,7 @@ async def render_custom_card(
     tmsg = await bot.send_message(
         chat_id, "Создаю рендер...", reply_to_message_id=message_id
     )
+    await bot.send_chat_action(config["chat_id"], "upload_photo")
 
     rendered = render(render_config)
 
@@ -224,10 +225,10 @@ async def render_custom_card(
 
 
 async def gen_and_send_card(session: Session, user: SavedUser, message_id: int):
-    await bot.send_chat_action(config["chat_id"], "upload_photo")
     msg = await bot.send_message(
         config["chat_id"], "Создаю карточку...", reply_to_message_id=message_id
     )
+    await bot.send_chat_action(config["chat_id"], "upload_photo")
 
     async with gen_card_lock:
         if user.last_card + timedelta(seconds=config['cooldown']) > datetime.now():
