@@ -32,7 +32,8 @@
             "rare": 31,
             "epic": 18,
             "mythic": 8,
-            "legendary": 5
+            "legendary": 4,
+            "hyper": 1
         }
     },
 

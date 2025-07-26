@@ -3,7 +3,7 @@ from typing import Literal, TypeAlias, TypedDict
 
 from aiogram.filters.callback_data import CallbackData
 
-Rarity: TypeAlias = Literal["common", "rare", "epic", "mythic", "legendary"]
+Rarity: TypeAlias = Literal["common", "rare", "epic", "mythic", "legendary", "hyper"]
 BaseColor: TypeAlias = Literal[
     "white", "red", "orange", "yellow", "green", "cyan", "blue", "purple"
 ]
@@ -35,6 +35,7 @@ class RarityEnum(str, Enum):
     EPIC = "epic"
     MYTHIC = "mythic"
     LEGENDARY = "legendary"
+    HYPER = "hyper"
 
 
 class BaseColorEnum(str, Enum):
