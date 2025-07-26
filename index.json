@@ -12,9 +12,9 @@
         },
 
         "players": {
-            "often": 60,
-            "common": 30,
-            "rare": 10
+            "often": 97,
+            "common": 2,
+            "rare": 1
         },
 
         "backgrounds": {
@@ -71,10 +71,7 @@
             "Teakmarble16548",
             "inostranec3348",
             "ShReK0007333",
-            "dggdgdggd4098"
-        ],
-
-        "common": [
+            "dggdgdggd4098",
             "belluga3094",
             "LEOANIMATION802",
             "PuzzleTeas",
@@ -86,10 +83,7 @@
             "ARISTOKRAT1099",
             "IolDiymond",
             "Seyman76",
-            "Dungeonerrr"
-        ],
-
-        "rare": [
+            "Dungeonerrr",
             "Der41rcool1",
             "MrSeventiss",
             "ZetiCks4735",
@@ -103,6 +97,14 @@
             "mraiR69",
             "AdoredOO",
             "t0n43635"
+        ],
+
+        "common": [
+            "Hero"
+        ],
+
+        "rare": [
+            "Creator"
         ]
     },
 
