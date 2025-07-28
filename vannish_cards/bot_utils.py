@@ -151,15 +151,16 @@ async def send_card_info(
     message_id: int,
     direct: bool = True,
     user_id: int | None = None,
-):
+) -> int:
     if user_id is None and direct:
         raise ValueError("Direct message must have user_id")
 
     card: SavedCard | None = get_card_by_number(session, card_number)
     if card is None:
-        return await bot.send_message(
+        await bot.send_message(
             config["chat_id"], "Карточка не найдена", reply_to_message_id=message_id
         )
+        return 0
 
     if not os.path.exists(f"output/{card.number}.png"):
         await bot.send_chat_action(config["chat_id"], "upload_photo")
@@ -186,9 +187,9 @@ async def send_card_info(
         )
     except (TelegramForbiddenError, TelegramNotFound, TelegramBadRequest) as exc:
         logger.warning(repr(exc))
-        return False
+        return 1
 
-    return True
+    return 2
 
     # if direct:
     #     await bot.send_message(card.user_id, f"Карточка #{card.number} отправлена в лс!", reply_to_message_id=message_id)
