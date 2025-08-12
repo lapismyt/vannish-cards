@@ -1,5 +1,6 @@
 import asyncio
 import os
+from datetime import datetime, timedelta
 from uuid import uuid4
 
 from aiogram.exceptions import (
@@ -11,7 +12,6 @@ from aiogram.types import Chat, FSInputFile, InlineKeyboardButton, InputMediaPho
 from aiogram.utils.keyboard import InlineKeyboardBuilder
 from aiogram.utils.markdown import hbold, hcode, hlink, text
 from loguru import logger
-from datetime import datetime, timedelta
 from sqlmodel import Session
 
 from .bot import bot
@@ -225,13 +225,16 @@ async def render_custom_card(
     )
 
 
-async def gen_and_send_card(session: Session, user: SavedUser, message_id: int):
+async def gen_and_send_card(session: Session, user_id: int, message_id: int):
     msg = await bot.send_message(
         config["chat_id"], "Создаю карточку...", reply_to_message_id=message_id
     )
     await bot.send_chat_action(config["chat_id"], "upload_photo")
 
     async with gen_card_lock:
+        user: SavedUser | None = get_user_by_id(session, user_id)
+        if user is None:
+            return await msg.edit_text("Не удалось найти пользователя")
         if user.last_card + timedelta(seconds=config['cooldown']) > datetime.now():
             remaining_seconds = (
                 user.last_card + timedelta(seconds=config['cooldown']) - datetime.now()

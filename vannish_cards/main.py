@@ -225,7 +225,7 @@ async def take_card(message: Message, engine: Engine):
     if saved_user is None:
         raise ValueError("User not found")
 
-    return await gen_and_send_card(session, saved_user, message.message_id)  # type: ignore
+    return await gen_and_send_card(session, saved_user.user_id, message.message_id)  # type: ignore
 
 
 @dp.callback_query(CallbackQueryFilter(callback_data=OpenCardsCollection))
