@@ -23,6 +23,7 @@
             "triangles": 20,
             "diamonds": 15,
             "crystals": 10,
+            "slime": 7,
             "lines": 5,
             "fee": 1
         },
