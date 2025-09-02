@@ -25,6 +25,7 @@ class BackgroundEnum(str, Enum):
     TRIANGLES = "triangles"
     DIAMONDS = "diamonds"
     CRYSTALS = "crystals"
+    SLIME = "slime"
     LINES = "lines"
     FEE = "fee"
 
