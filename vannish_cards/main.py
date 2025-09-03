@@ -307,7 +307,7 @@ async def chance(message: Message, engine: Engine):
 
 @dp.message(F.text.lower().strip() == "шaнс")
 async def chance(message: Message, engine: Engine):
-    return await message.answer("Нет иди нахуй")
+    return await message.reply("Нет иди нахуй")
 
 
 @dp.message(F.text.lower().strip() == "супершанс")
