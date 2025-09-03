@@ -300,12 +300,12 @@ async def card_callback(callback_query: CallbackQuery, engine: Engine):
     # await callback_query.message.delete()
 
 
-@dp.message(F.text.lower().strip() == "шанс" or F.text.lower().strip() == "шанc" or F.text.lower().strip() == "шанc")
+@dp.message(F.text.lower().strip() == "шанс")
 async def chance(message: Message, engine: Engine):
     return await take_card(message, engine)
 
 
-@dp.message(F.text.lower().strip() == "шaнс")
+@dp.message(F.text.lower().strip() == "шaнc" or F.text.lower().strip() == "шанc" or F.text.lower().strip() == "шaнс")
 async def chance(message: Message, engine: Engine):
     return await message.reply("Нет иди нахуй")
 
