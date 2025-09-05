@@ -305,6 +305,11 @@ async def chance(message: Message, engine: Engine):
     return await take_card(message, engine)
 
 
+@dp.message(F.text.lower().strip() == "шaнc" or F.text.lower().strip() == "шанc" or F.text.lower().strip() == "шaнс")
+async def chance(message: Message, engine: Engine):
+    return await message.reply("Нет иди нахуй")
+
+
 @dp.message(F.text.lower().strip() == "супершанс")
 async def super_chance(message: Message, engine: Engine):
     session = Session(engine)
