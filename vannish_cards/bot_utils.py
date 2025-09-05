@@ -376,8 +376,10 @@ def get_card_desciption(session: Session, card: SavedCard) -> str:
         return msg
 
     msg += (
-        f"Владелец: {owner.username if owner.username is not None else owner.user_id}\n"
+        f"Владелец: {owner.username if owner.username is not None else owner.user_id}\n\n"
     )
+
+    msg += "Коллекция: Обычная\n"
 
     return msg
 
@@ -429,6 +431,12 @@ def get_card_desciption_html(session: Session, card: SavedCard) -> str:
         hlink(
             str(owner.username if owner.username is not None else owner.user_id), link
         ),
+        "\n\n",
+    )
+
+    msg += text(
+        hbold("Коллекция:"),
+        hcode("Обычная"),
         "\n",
     )
 
