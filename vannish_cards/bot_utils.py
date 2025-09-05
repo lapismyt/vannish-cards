@@ -235,9 +235,9 @@ async def gen_and_send_card(session: Session, user_id: int, message_id: int):
         user: SavedUser | None = get_user_by_id(session, user_id)
         if user is None:
             return await msg.edit_text("Не удалось найти пользователя")
-        if user.last_card + timedelta(seconds=config['cooldown']) > datetime.now():
+        if user.last_card + timedelta(seconds=config["cooldown"]) > datetime.now():
             remaining_seconds = (
-                user.last_card + timedelta(seconds=config['cooldown']) - datetime.now()
+                user.last_card + timedelta(seconds=config["cooldown"]) - datetime.now()
             ).total_seconds()
             last_seconds = remaining_seconds % 60
             remaining_minutes = (remaining_seconds - last_seconds) / 60
@@ -250,7 +250,7 @@ async def gen_and_send_card(session: Session, user_id: int, message_id: int):
             return await msg.edit_text(
                 f"Вы сможете получить карточку только через {str_time}"
             )
-    
+
         last_card = get_last_number_card(session)
         if last_card is None:
             number: int = 1
@@ -259,6 +259,12 @@ async def gen_and_send_card(session: Session, user_id: int, message_id: int):
                 number: int = 1
             else:
                 number: int = last_card.number + 1
+
+        if number > 2000:
+            return await msg.edit_text(
+                "__Генерация данной коллекции завершена! Ожидайте новую коллекцию, например...__ **ⅱ𝙹ᓭ₸ᒷꖎ リᖋ₸⚍॥**",
+                parse_mode="Markdown",
+            )
 
         render_config = random_render_config()
         render_config.number = number
